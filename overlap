@@ -1,0 +1,24 @@
+import java.util.*; 
+public class Main {
+    public static void main(String[] args) {
+        // Create an instance of Main to call the non-static method
+        Main obj = new Main();
+        boolean res = obj.checkOverlap(2, 3, 4, 1, 2, 2, 2);
+        
+        if (res) System.out.println("Overlap occurs");
+        else System.out.println("No Overlap");
+    }
+
+    public boolean checkOverlap(int radius, int xCenter, int yCenter, int x1, int y1, int x2, int y2) {
+        // Closest point in rectangle to circle center
+        int x = Math.max(x1, Math.min(xCenter, x2));
+        int y = Math.max(y1, Math.min(yCenter, y2));
+        
+        // Distance between closest point and circle center
+        int dx = x - xCenter;
+        int dy = y - yCenter;
+        
+        // Check if point is inside/on circle
+        return dx * dx + dy * dy <= radius * radius;
+    }
+}
