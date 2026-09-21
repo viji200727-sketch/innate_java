@@ -1,0 +1,33 @@
+class Solution {
+    public int[] resultArray(int[] nums, int k) {
+        int[] totalCounts = new int[k];
+        // dp[r] stores the count of subarrays ending at the previous index with product % k == r
+        int[] dp = new int[k];
+        
+        for (int num : nums) {
+            int[] nextDp = new int[k];
+            int currentMod = num % k;
+            
+            // Scenario 1: Start a brand new subarray with only the current element
+            nextDp[currentMod] = 1;
+            
+            // Scenario 2: Extend all existing subarrays from the previous index
+            for (int r = 0; r < k; r++) {
+                if (dp[r] > 0) {
+                    int nextMod = (r * currentMod) % k;
+                    nextDp[nextMod] += dp[r];
+                }
+            }
+            
+            // Accumulate current results into our global answer array
+            for (int r = 0; r < k; r++) {
+                totalCounts[r] += nextDp[r];
+            }
+            
+            // Update the DP state for the next element
+            dp = nextDp;
+        }
+        
+        return totalCounts;
+    }
+}
